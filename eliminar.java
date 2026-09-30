@@ -52,6 +52,7 @@ public class eliminar extends JFrame {
 		JLabel relleno3 = new JLabel("");
 		JLabel relleno4 = new JLabel("");
 		JLabel nom = new JLabel("Número Objeto (ID)");
+		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		nom.setForeground(new Color(85, 65, 35));
 		nom.setFont(new Font(Arial, Font.PLAIN, 40));
 		JTextField res1 = new JTextField();

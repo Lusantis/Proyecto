@@ -3,16 +3,16 @@ package EjercicioVentanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class crud extends JFrame {
 	private static final String Arial = null;
-	usuario[] ar=new usuario[5];
-	comprobar[] asd=new comprobar[5];
+	ArrayList<usuario> listausuario = new ArrayList<>();
 
 	public crud() {
-
+		comprobar[] asd = new comprobar[1];
 		this.setLayout(new BorderLayout());
 		this.setTitle("Ventana");
 		this.setSize(1368, 768);
@@ -45,17 +45,20 @@ public class crud extends JFrame {
 		salir.setFont(new Font(Arial, Font.PLAIN, 40));
 		salir.setBounds(100, 1, 100, 90);
 		JLabel ini = new JLabel("Iniciar Sesión");
+		ini.setHorizontalAlignment(SwingConstants.CENTER);
 		ini.setForeground(new Color(85, 65, 35));
 		ini.setFont(new Font(Arial, Font.PLAIN, 30));
 		ini.setBounds(600, 150, 200, 100);
 		panel1.setLayout(new GridLayout(3, 2));
 		JLabel nom = new JLabel("Nombre");
+		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		nom.setForeground(new Color(85, 65, 35));
 		nom.setFont(new Font(Arial, Font.PLAIN, 40));
 		JTextField res1 = new JTextField();
 		res1.setFont(new Font(Arial, Font.PLAIN, 40));
 		res1.setForeground(new Color(85, 65, 35));
 		JLabel ced = new JLabel("Cédula");
+		ced.setHorizontalAlignment(SwingConstants.CENTER);
 		ced.setForeground(new Color(85, 65, 35));
 		ced.setFont(new Font(Arial, Font.PLAIN, 40));
 		JTextField res3 = new JTextField();
@@ -64,37 +67,25 @@ public class crud extends JFrame {
 		JButton boton = new JButton("Acceder");
 		boton.setFont(new Font(Arial, Font.PLAIN, 40));
 		boton.addActionListener(new ActionListener() {
-			/*
-			 * public void actionPerformed(ActionEvent a) { String usuario=res1.getText();
-			 * String cedula2=res3.getText();
-			 * 
-			 * if ((usuario.equals("santiago"))&&(cedula2.equals("12345"))) { dosven ven=new
-			 * dosven(); ven.setVisible(true); setVisible(false); }else {
-			 * JOptionPane.showMessageDialog(null, "Error, datos incorrectos"); } }
-			 */
+
 			public void actionPerformed(ActionEvent e) {
 
 				menu menu = new menu();
-				String nombre;
 				menu.setVisible(true);
 				setVisible(false);
-				/*if (res1.getText().length() != 0 && res3.getText().length() != 0) {
-					nombre = res1.getText();
-					String cedula2 = res3.getText();
-					int cedula = Integer.parseInt(cedula2);
 
-					if (registro(asd, ar, nombre, cedula)) {
-						menu.setVisible(true);
-						setVisible(false);
-					} else {
-						System.out.println("falla al autenticar");
-					}
-
-				} else {
-					System.out.println("hay campos vacios");
-
-				}*/
-
+				/*
+				 * if (res1.getText().length() != 0 && res3.getText().length() != 0) { String
+				 * nombre; nombre = res1.getText(); String cedula2 = res3.getText(); int cedula
+				 * = Integer.parseInt(cedula2);
+				 * 
+				 * if (registro(asd, nombre, cedula)) { menu.setVisible(true);
+				 * setVisible(false); } else { System.out.println("falla al autenticar"); }
+				 * 
+				 * } else { System.out.println("hay campos vacios");
+				 * 
+				 * }
+				 */
 			}
 		});
 		panel1.setBackground(new Color(142, 160, 90));
@@ -119,12 +110,11 @@ public class crud extends JFrame {
 
 	}
 
-	public boolean registro(comprobar asd[], usuario ar[], String nombre, int cedula) {
+	public boolean registro(comprobar[] asd, String nombre, int cedula) {
 		boolean registro = false;
 		asd[0] = new comprobar(nombre, cedula);
-		for (int i = 0; i < ar.length; i++) {
-			
-			if (asd[0].equals(ar[i])) {
+		for (usuario u : listausuario) {
+			if (asd[0].equals(u)) {
 				registro = true;
 				System.out.println("correcto");
 			}

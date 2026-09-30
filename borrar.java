@@ -3,17 +3,17 @@ package EjercicioVentanas;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class borrar extends JFrame {
 
 	private static final String Arial = null;
-	usuario ar[];
-	comprobar asd[];
+	ArrayList<usuario> listausuario = new ArrayList<>();
 
 	public borrar() {
-		// usuario usu[]=new usuario[5];//
 		this.setLayout(new BorderLayout());
 		this.setTitle("Ventana");
 		this.setSize(1368, 768);
@@ -42,6 +42,10 @@ public class borrar extends JFrame {
 
 			}
 		});
+		String[] columnas = { "CI", "NOMBRE" };
+		DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+		JTable tabla = new JTable(modelo);
+		JScrollPane scrollpanel = new JScrollPane(tabla);
 		JLabel relleno = new JLabel("");
 		JLabel relleno2 = new JLabel("");
 		salir.setBounds(100, 1, 100, 90);
@@ -51,12 +55,14 @@ public class borrar extends JFrame {
 		ini.setBounds(600, 150, 200, 100);
 		panel1.setLayout(new GridLayout(3, 2));
 		JLabel nom = new JLabel("Nombre");
+		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		nom.setForeground(new Color(85, 65, 35));
 		nom.setFont(new Font(Arial, Font.PLAIN, 40));
 		JTextField res1 = new JTextField();
 		res1.setFont(new Font(Arial, Font.PLAIN, 40));
 		res1.setForeground(new Color(85, 65, 35));
 		JLabel ced = new JLabel("Cédula");
+		ced.setHorizontalAlignment(SwingConstants.CENTER);
 		ced.setForeground(new Color(85, 65, 35));
 		ced.setFont(new Font(Arial, Font.PLAIN, 40));
 		JTextField res3 = new JTextField();
@@ -65,32 +71,11 @@ public class borrar extends JFrame {
 		JButton boton = new JButton("Borrar");
 		boton.setFont(new Font(Arial, Font.PLAIN, 40));
 		boton.addActionListener(new ActionListener() {
-			/*
-			 * public void actionPerformed(ActionEvent a) { String usuario=res1.getText();
-			 * String cedula2=res3.getText();
-			 * 
-			 * if ((usuario.equals("santiago"))&&(cedula2.equals("12345"))) { dosven ven=new
-			 * dosven(); ven.setVisible(true); setVisible(false); }else {
-			 * JOptionPane.showMessageDialog(null, "Error, datos incorrectos"); } }
-			 */
+
 			public void actionPerformed(ActionEvent a) {
-				usuario[] usu = new usuario[5];
-				String nombre;
-				if (res1.getText().length() != 0 && res3.getText().length() != 0) {
-					nombre = res1.getText();
-					String cedula2 = res3.getText();
-					int cedula = Integer.parseInt(cedula2);
-					borrar(asd, usu, nombre, cedula);
-					// if (registro(nombre, cedula)) {
-
-					// } else {
-					// System.out.println("falla al registrar");
-					// }
-				} else {
-					System.out.println("Hay campos vacios");
-
-				}
-
+				int fila = tabla.getSelectedRow();
+				bajausuario(fila, modelo);
+				actualizarusuario(modelo);
 			}
 		});
 		panel1.setBackground(new Color(142, 160, 90));
@@ -109,20 +94,20 @@ public class borrar extends JFrame {
 		panel3.add(panel1);
 		panel2.add(containima1);
 		this.add(panel3);
-		// this.add(panel2,BorderLayout.NORTH);
-		// this.add(panel1, BorderLayout.CENTER);
 		this.add(boton, BorderLayout.SOUTH);
 
 	}
 
-	public static void borrar(comprobar asd[], usuario ar[], String nombre, int cedula) {
-		asd[1] = new comprobar(nombre, cedula);
-		for (int i = 0; i < ar.length; i++) {
-			if (asd[1].equals(ar[i])) {
-				ar[i].setNombre(null);
-				ar[i].setCedula(0);
-			}
-			System.out.println(ar[i]);
+	public void actualizarusuario(DefaultTableModel modelo) {
+		modelo.setRowCount(0);
+		for (usuario u : listausuario) {
+			Object[] fila = { u.getCedula(), u.getNombre() };
+			modelo.addRow(fila);
 		}
+	}
+
+	public void bajausuario(int fila, DefaultTableModel modelo) {
+		listausuario.remove(fila);
+		actualizarusuario(modelo);
 	}
 }
