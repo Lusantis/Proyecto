@@ -12,6 +12,7 @@ import javax.swing.table.JTableHeader;
 public class registro extends JFrame {
 	private static final String Arial = null;
 	ArrayList<usuario> listausuario = new ArrayList<>();
+	Gestor gestor = new Gestor();
 
 	public registro() {
 
@@ -26,13 +27,13 @@ public class registro extends JFrame {
 		Image imagenEscalada = ico.getImage().getScaledInstance(100, 90, Image.SCALE_SMOOTH);
 		ImageIcon iconoFinal = new ImageIcon(imagenEscalada);
 		JLabel containima1 = new JLabel(imagen1);
-		containima1.setBounds(230, 1, 500, 400);
+		containima1.setBounds(1000, 1, 500, 400);
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		JPanel panel3 = new JPanel();
 		JPanel panel4 = new JPanel();
 		panel4.setLayout(new GridLayout(1, 2));
-		JPanel panel41 = new JPanel();
+		// JPanel panel41 = new JPanel();
 		panel3.setLayout(new GridLayout(2, 1));
 		panel2.setLayout(null);
 		JButton salir = new JButton();
@@ -68,7 +69,7 @@ public class registro extends JFrame {
 		JLabel ini = new JLabel("Registrar Usuario");
 		ini.setForeground(new Color(85, 65, 35));
 		ini.setFont(new Font(Arial, Font.PLAIN, 25));
-		ini.setBounds(100, 150, 200, 100);
+		ini.setBounds(600, 150, 200, 100);
 		panel1.setLayout(new GridLayout(3, 2));
 		JLabel nom = new JLabel("Nombre");
 		nom.setHorizontalAlignment(SwingConstants.CENTER);
@@ -96,12 +97,14 @@ public class registro extends JFrame {
 						nombre = res1.getText();
 						String cedula2 = res3.getText();
 						int cedula = Integer.parseInt(cedula2);
-						altausuario(cedula, nombre);
-						actualizarusuario(model);
+						if ((gestor.listarUsuarios(model) && gestor.altaUsuario(cedula, nombre))) {
+							JOptionPane.showMessageDialog(null, "Usuario Creado exitosamente");
+						}
 					} else {
-						System.out.println("Hay campos vacios");
-
+						JOptionPane.showMessageDialog(null, "Hay campos vacios");
 					}
+					dosven.setVisible(true);
+					setVisible(false);
 
 				}
 
@@ -123,24 +126,11 @@ public class registro extends JFrame {
 		panel3.add(panel2);
 		panel3.add(panel1);
 		panel4.add(panel3);
-		panel41.add(scrollpanel);
-		panel4.add(panel41);
+		// panel41.add(scrollpanel);
+		// panel4.add(panel41);
 		this.add(panel4);
 
 		this.add(boton, BorderLayout.SOUTH);
 
-	}
-
-	public void actualizarusuario(DefaultTableModel modelo) {
-		modelo.setRowCount(0);
-		for (usuario u : listausuario) {
-			Object[] fila = { u.getCedula(), u.getNombre() };
-			modelo.addRow(fila);
-		}
-	}
-
-	public void altausuario(int cedula, String nombre) {
-		usuario u = new usuario(nombre, cedula);
-		listausuario.add(u);
 	}
 }

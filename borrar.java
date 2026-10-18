@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class borrar extends JFrame {
-
+	Gestor gestor = new Gestor();
 	private static final String Arial = null;
 	ArrayList<usuario> listausuario = new ArrayList<>();
 
@@ -73,9 +73,18 @@ public class borrar extends JFrame {
 		boton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent a) {
-				int fila = tabla.getSelectedRow();
-				bajausuario(fila, modelo);
-				actualizarusuario(modelo);
+				if (JOptionPane.showConfirmDialog(null, "¿Seguro que quieres BORRAR este usuario?") == 0) {
+					if (res1.getText().length() != 0 && res3.getText().length() != 0) {
+						String nombre = res1.getText();
+						String cedula2 = res3.getText();
+						int cedula = Integer.parseInt(cedula2);
+						if (gestor.borrarusuario(cedula, nombre)) {
+							JOptionPane.showMessageDialog(null, "Usuario Borrado exitosamente");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Hay campos vacios");
+					}
+				}
 			}
 		});
 		panel1.setBackground(new Color(142, 160, 90));

@@ -10,6 +10,7 @@ import javax.swing.*;
 public class crud extends JFrame {
 	private static final String Arial = null;
 	ArrayList<usuario> listausuario = new ArrayList<>();
+	Gestor gestor = new Gestor();
 
 	public crud() {
 		comprobar[] asd = new comprobar[1];
@@ -71,21 +72,24 @@ public class crud extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				menu menu = new menu();
-				menu.setVisible(true);
-				setVisible(false);
+				if (res1.getText().length() != 0 && res3.getText().length() != 0) {
+					String nombre;
+					nombre = res1.getText();
+					String cedula2 = res3.getText();
+					int cedula = Integer.parseInt(cedula2);
+					gestor.login(cedula, nombre);
 
-				/*
-				 * if (res1.getText().length() != 0 && res3.getText().length() != 0) { String
-				 * nombre; nombre = res1.getText(); String cedula2 = res3.getText(); int cedula
-				 * = Integer.parseInt(cedula2);
-				 * 
-				 * if (registro(asd, nombre, cedula)) { menu.setVisible(true);
-				 * setVisible(false); } else { System.out.println("falla al autenticar"); }
-				 * 
-				 * } else { System.out.println("hay campos vacios");
-				 * 
-				 * }
-				 */
+					if (gestor.login(cedula, nombre)) {
+						menu.setVisible(true);
+						setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "Falla al autenticar");
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Hay campos vacios");
+				}
+
 			}
 		});
 		panel1.setBackground(new Color(142, 160, 90));
@@ -100,25 +104,11 @@ public class crud extends JFrame {
 		panel1.add(res3);
 		panel2.add(salir);
 		panel2.add(containima1);
-
 		panel2.add(ini);
-
 		panel3.add(panel2);
 		panel3.add(panel1);
 		this.add(panel3);
 		this.add(boton, BorderLayout.SOUTH);
 
-	}
-
-	public boolean registro(comprobar[] asd, String nombre, int cedula) {
-		boolean registro = false;
-		asd[0] = new comprobar(nombre, cedula);
-		for (usuario u : listausuario) {
-			if (asd[0].equals(u)) {
-				registro = true;
-				System.out.println("correcto");
-			}
-		}
-		return registro;
 	}
 }
